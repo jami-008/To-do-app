@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProDo - Professional Task Manager</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons (Professional Icons) -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class='bx bx-check-double'></i>
+                <h2>ProDo.</h2>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="active"><i class='bx bx-grid-alt'></i> Dashboard</a>
+                <a href="#"><i class='bx bx-calendar'></i> Calendar</a>
+                <a href="#"><i class='bx bx-folder'></i> Projects</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class='bx bx-moon'></i> <span id="theme-text">Dark Mode</span>
+                </button>
+                <button id="logout-btn" class="btn-outline">
+                    <i class='bx bx-log-out'></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-info">
+                    <h1>Welcome back, <span id="user-name">User</span> 👋</h1>
+                    <p>Here is your daily task summary.</p>
+                </div>
+                <div class="progress-container">
+                    <p>Daily Progress (<span id="progress-text">0%</span>)</p>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Task Controls (Search & Filter) -->
+            <section class="task-controls">
+                <div class="search-box">
+                    <i class='bx bx-search'></i>
+                    <input type="text" id="search-task" placeholder="Search tasks...">
+                </div>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+                <div class="sort-box">
+                    <select id="sort-task">
+                        <option value="newest">Newest First</option>
+                        <option value="priority">High Priority</option>
+                        <option value="due">Due Date</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Task Input Form -->
+            <section class="add-task-section">
+                <form id="task-form" class="task-form">
+                    <input type="text" id="task-title" placeholder="What needs to be done?" required>
+                    <input type="datetime-local" id="task-due-date" required>
+                    <select id="task-priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                    <select id="task-category">
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Study">Study</option>
+                    </select>
+                    <button type="submit" class="btn-primary"><i class='bx bx-plus'></i> Add Task</button>
+                </form>
+            </section>
+
+            <!-- Task List Container -->
+            <section class="tasks-container">
+                <ul id="task-list" class="task-list">
+                    <!-- Tasks will be rendered here dynamically via JS -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
