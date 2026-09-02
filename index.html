@@ -1,111 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProDo - Professional Task Manager</title>
-    
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Boxicons (Professional Icons) -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <title>TASKFLOW</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="app-container">
-        
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="brand">
-                <i class='bx bx-check-double'></i>
-                <h2>ProDo.</h2>
+    <div class="page">
+        <header class="site-header">
+            <div>
+                <h1>TASKFLOW</h1>
+                <p class="tagline">Stay organized. Get things done.</p>
             </div>
-            
-            <nav class="nav-links">
-                <a href="#" class="active"><i class='bx bx-grid-alt'></i> Dashboard</a>
-                <a href="#"><i class='bx bx-calendar'></i> Calendar</a>
-                <a href="#"><i class='bx bx-folder'></i> Projects</a>
-            </nav>
+            <p class="header-count" id="header-count">0 tasks</p>
+        </header>
 
-            <div class="sidebar-bottom">
-                <button id="theme-toggle" class="btn-icon">
-                    <i class='bx bx-moon'></i> <span id="theme-text">Dark Mode</span>
-                </button>
-                <button id="logout-btn" class="btn-outline">
-                    <i class='bx bx-log-out'></i> Logout
-                </button>
+        <section class="add-card" aria-labelledby="add-heading">
+            <h2 id="add-heading" class="visually-hidden">Add a task</h2>
+            <form id="todo-form" class="add-form">
+                <label class="field title-field">
+                    <span class="visually-hidden">Todo title</span>
+                    <span class="title-input-wrap">
+                        <span class="plus" aria-hidden="true">+</span>
+                        <input type="text" id="todo-title" name="title" placeholder="What needs to be done..." maxlength="200" required>
+                    </span>
+                </label>
+
+                <label class="field">
+                    <span class="visually-hidden">Priority</span>
+                    <select id="todo-priority" name="priority" aria-label="Priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span class="visually-hidden">Due date</span>
+                    <input type="date" id="todo-due-date" name="dueDate" aria-label="Due date">
+                </label>
+
+                <button type="submit" id="submit-btn" class="btn btn-primary">ADD</button>
+            </form>
+            <p id="form-error" class="form-error hidden" role="alert"></p>
+        </section>
+
+        <section class="stats" aria-label="Task statistics">
+            <div class="stat-card">
+                <span class="stat-label">TOTAL</span>
+                <span id="count-total" class="stat-value">0</span>
             </div>
-        </aside>
+            <div class="stat-card">
+                <span class="stat-label">ACTIVE</span>
+                <span id="count-active" class="stat-value">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">COMPLETED</span>
+                <span id="count-completed" class="stat-value">0</span>
+            </div>
+        </section>
 
-        <!-- Main Workspace -->
-        <main class="main-content">
-            <header class="top-header">
-                <div class="header-info">
-                    <h1>Welcome back, <span id="user-name">User</span> 👋</h1>
-                    <p>Here is your daily task summary.</p>
-                </div>
-                <div class="progress-container">
-                    <p>Daily Progress (<span id="progress-text">0%</span>)</p>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-fill"></div>
-                    </div>
-                </div>
-            </header>
+        <section class="toolbar" aria-label="Search and filters">
+            <label class="search-field">
+                <span class="visually-hidden">Search tasks</span>
+                <input type="search" id="search-input" placeholder="Search" autocomplete="off">
+            </label>
+            <div class="filters" role="group" aria-label="Filter tasks">
+                <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">ALL</button>
+                <button type="button" class="filter-btn" data-filter="active" aria-pressed="false">ACTIVE</button>
+                <button type="button" class="filter-btn" data-filter="completed" aria-pressed="false">COMPLETED</button>
+            </div>
+        </section>
 
-            <!-- Task Controls (Search & Filter) -->
-            <section class="task-controls">
-                <div class="search-box">
-                    <i class='bx bx-search'></i>
-                    <input type="text" id="search-task" placeholder="Search tasks...">
-                </div>
-                <div class="filter-options">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="active">Active</button>
-                    <button class="filter-btn" data-filter="completed">Completed</button>
-                </div>
-                <div class="sort-box">
-                    <select id="sort-task">
-                        <option value="newest">Newest First</option>
-                        <option value="priority">High Priority</option>
-                        <option value="due">Due Date</option>
-                    </select>
-                </div>
-            </section>
+        <section class="todo-section" aria-labelledby="list-heading">
+            <div class="list-header">
+                <h2 id="list-heading">TODAY</h2>
+                <button type="button" id="clear-completed-btn" class="btn btn-text">Clear completed</button>
+            </div>
+            <p id="list-status" class="visually-hidden" aria-live="polite"></p>
+            <ul id="todo-list" class="todo-list"></ul>
+            <div id="empty-state" class="empty-state hidden">
+                <p id="empty-title" class="empty-title">No tasks yet</p>
+                <p id="empty-copy" class="empty-copy">Add your first task above</p>
+            </div>
+        </section>
 
-            <!-- Task Input Form -->
-            <section class="add-task-section">
-                <form id="task-form" class="task-form">
-                    <input type="text" id="task-title" placeholder="What needs to be done?" required>
-                    <input type="datetime-local" id="task-due-date" required>
-                    <select id="task-priority">
-                        <option value="Low">Low</option>
-                        <option value="Medium" selected>Medium</option>
-                        <option value="High">High</option>
-                    </select>
-                    <select id="task-category">
-                        <option value="Work">Work</option>
-                        <option value="Personal">Personal</option>
-                        <option value="Study">Study</option>
-                    </select>
-                    <button type="submit" class="btn-primary"><i class='bx bx-plus'></i> Add Task</button>
-                </form>
-            </section>
-
-            <!-- Task List Container -->
-            <section class="tasks-container">
-                <ul id="task-list" class="task-list">
-                    <!-- Tasks will be rendered here dynamically via JS -->
-                </ul>
-            </section>
-        </main>
+        <footer class="site-footer">
+            <p id="remaining-count">0 tasks remaining</p>
+            <p class="footer-note">Your tasks are saved locally in this browser.</p>
+        </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/storage.js"></script>
+    <div id="delete-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+        <div class="modal-backdrop" data-modal-dismiss="true"></div>
+        <div class="modal-card">
+            <h2 id="delete-modal-title">Delete task?</h2>
+            <p>This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button type="button" id="delete-cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button type="button" id="delete-confirm-btn" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-relevant="additions"></div>
+
     <script src="js/app.js"></script>
-    <script src="js/dashboard.js"></script>
 </body>
 </html>
